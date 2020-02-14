@@ -1,0 +1,23 @@
+version: '3'
+ 
+services:
+  node:
+    container_name: node
+    build: ./
+    volumes:
+      - ./node:/var/www/app
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+    command:
+      sh -c 'npm i && node server.js'
+  redis:
+    container_name: redis_frontend
+    image: redis
+    restart: always
+    ports:
+      - "6380:6379"
+    volumes:
+      - /data/redis:/data
+    command: redis-server --appendonly yes
